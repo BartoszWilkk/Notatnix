@@ -6,7 +6,8 @@ import { HomeComponent } from './home/home/home.component';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {ApiServiceService} from './api-service.service';
+import {ApiServiceService} from './service/api-service.service';
+import { AllNotesComponent } from './all-notes/all-notes.component';
 
 
 const appRoutes: Routes = [
@@ -19,7 +20,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AllNotesComponent
   ],
   imports: [
     BrowserModule,

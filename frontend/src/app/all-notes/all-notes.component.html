@@ -1,0 +1,16 @@
+<div>
+  <div>Wszystkie notatki jakie znajdują się teraz w bazie!</div>
+  <ul>
+    <li *ngFor="let note of notes" class="all-notes-container-li">
+      <div class="all-notes-container">
+        id: {{note.id}}<br>
+        title: {{note.title}}<br>
+        description: {{note.description}}<br>
+        averageRating: {{note.averageRating}}
+      </div>
+    </li>
+  </ul>
+
+
+
+</div>

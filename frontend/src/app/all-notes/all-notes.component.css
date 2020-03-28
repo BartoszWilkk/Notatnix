@@ -1,0 +1,10 @@
+.all-notes-container{
+  border-style: solid;
+  border-width: 3px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.all-notes-container-li{
+  padding: 2px;
+}
