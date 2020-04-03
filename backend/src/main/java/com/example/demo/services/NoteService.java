@@ -19,10 +19,13 @@ public class NoteService {
     @Autowired
     private NoteRepository repository;
 
-    public NoteModel save(NoteModel model){
-        NoteEntity entity = mapper.mapToEntity(model);
-        NoteEntity entityCreated = repository.save(entity);
-        return mapper.mapToModel(entityCreated);
+    public NoteModel save(NoteModel model) {
+        if (!repository.existsByTitle(model.getTitle())) {
+            NoteEntity entity = mapper.mapToEntity(model);
+            NoteEntity entityCreated = repository.save(entity);
+            return mapper.mapToModel(entityCreated);
+        }
+        else return null;
     }
 
     public List<NoteModel> getAll() {

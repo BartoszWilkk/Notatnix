@@ -4,7 +4,16 @@
   <title>Notatnix</title>
 </head>
 <body>
+<h1>Notatnix</h1>
+<div>
+  <nav>
+    <ul>
+      <li><a routerLink="/app-all-notes" routerLinkActive="active">Notatki</a> </li>
+      <li><a routerLink="/app-add-note" routerLinkActive="active">Dodaj notatkę</a></li>
+    </ul>
+  </nav>
+</div>
 <div class="container">
-  <app-all-notes></app-all-notes>
+  <router-outlet></router-outlet>
 </div>
 </body>

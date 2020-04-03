@@ -13,11 +13,12 @@ export class ApiServiceService {
   private SAVE_NOTE = `${this.BASE_URL}/note/save`;
 
   constructor(private http: HttpClient) { }
-  getHome(): Observable<any> {
-    return this.http.get(this.BASE_URL, {responseType: 'text'});
-  }
 
   getAllNotes(): Observable<Note[]> {
     return this.http.get<Note[]>(this.ALL_NOTES);
+  }
+
+  saveNote(note: Note): Observable<Note> {
+    return this.http.post<Note>(this.SAVE_NOTE, note);
   }
 }

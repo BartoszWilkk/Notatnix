@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 public interface NoteRepository extends JpaRepository<NoteEntity, Long> {
+    boolean existsByTitle(String title);
 }

@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+body{
+  background-color: lightgrey;
+}
+
+.div-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  min-width: 600px;
+}
