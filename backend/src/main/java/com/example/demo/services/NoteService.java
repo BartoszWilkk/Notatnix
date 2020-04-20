@@ -28,6 +28,24 @@ public class NoteService {
         else return null;
     }
 
+    public NoteModel edit(NoteModel model, Long id, boolean checkTitle) {
+        if (repository.findById(id).isPresent()){
+            NoteEntity entity = repository.findById(id).get();
+            NoteEntity updateEntity = mapper.mapToEntity(model);
+            if (checkTitle && repository.existsByTitle(updateEntity.getTitle())){
+                return null;
+            }
+            else {
+                entity.setTitle(updateEntity.getTitle());
+                entity.setDescription(updateEntity.getDescription());
+                entity.setAverageRating(updateEntity.getAverageRating());
+                repository.save(entity);
+                return mapper.mapToModel(entity);
+            }
+        }
+        else return null;
+    }
+
     public List<NoteModel> getAll() {
         List<NoteEntity> entityList = repository.findAll();
         List<NoteModel> modelList = new ArrayList<>();
@@ -36,6 +54,13 @@ public class NoteService {
             modelList.add(mapper.mapToModel(entity));
         }
         return modelList;
+    }
+
+    public NoteModel getNote(Long id) {
+        if (repository.findById(id).isPresent()) {
+            return mapper.mapToModel(repository.findById(id).get());
+        }
+        else return null;
     }
 
 }

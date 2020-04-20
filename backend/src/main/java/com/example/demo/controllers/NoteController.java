@@ -20,9 +20,24 @@ public class NoteController {
         return service.save(model);
     }
 
+    @PostMapping("/edit/{id}")
+    public NoteModel edit(@RequestBody NoteModel model, @PathVariable Long id) {
+        return service.edit(model, id, false);
+    }
+
+    @PostMapping("/edit/checkTitle/{id}")
+    public NoteModel editCheckTitle(@RequestBody NoteModel model, @PathVariable Long id) {
+        return service.edit(model, id, true);
+    }
+
     @RequestMapping("/getAll")
     public List<NoteModel> getAll(){
         return service.getAll();
+    }
+
+    @RequestMapping("get/{id}")
+    public NoteModel getNote(@PathVariable Long id) {
+        return service.getNote(id);
     }
 
 }
