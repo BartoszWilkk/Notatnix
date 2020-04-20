@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Note} from '../model/note';
 import {ApiServiceService} from '../service/api-service.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-all-notes',
@@ -9,9 +10,9 @@ import {ApiServiceService} from '../service/api-service.service';
 })
 export class AllNotesComponent implements OnInit {
 
-  private notes: Note[] = [];
+  private notes: Note[];
 
-  constructor(private apiService: ApiServiceService) { }
+  constructor(private apiService: ApiServiceService, private router: Router) { }
 
   ngOnInit() {
     this.getAllNotes();
@@ -26,6 +27,11 @@ export class AllNotesComponent implements OnInit {
         alert('An error has occurred in method getAllNotes() in AllNotesComponent');
       }
     );
+  }
+
+  public openNote(id) {
+
+    this.router.navigate(['/app-view-note', id]);
   }
 
 }

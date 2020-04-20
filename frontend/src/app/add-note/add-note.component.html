@@ -1,0 +1,35 @@
+<p>add-note works!</p>
+<div class="div-center">
+  <div>
+    <div>
+      <label for="title">
+        Tytuł:
+        <br>
+      </label>
+      <input id="title" [className]="titleClass"
+             type="text" [(ngModel)]="title" (ngModelChange)="checkIsTitleEmpty()">
+    </div>
+
+    <div>
+      <label for="description">
+        Opis:
+        <br>
+      </label>
+      <input id="description" [className]="descriptionClass"
+             type="text" [(ngModel)]="description" (ngModelChange)="checkIsDescriptionEmpty()">
+    </div>
+
+
+    <button class="button" (click)="submit()">Dodaj notatkę</button>
+  </div>
+</div>
+
+<div>
+  <div [hidden]="hideMessageNoteAlreadyExist">
+    <h2>Taka notatka już istnieje!</h2>
+  </div>
+</div>
+
+
+
+

@@ -4,12 +4,25 @@
   <title>Notatnix</title>
 </head>
 <body>
-<h1>Notatnix</h1>
+<h1 style="font-size:
+51px;
+text-align:
+center;
+font-weight:
+700;
+gap:
+normal;
+margin:
+34.17px 0px">Notatnix</h1>
 <div>
   <nav>
     <ul>
       <li><a routerLink="/app-all-notes" routerLinkActive="active">Notatki</a> </li>
-      <li><a routerLink="/app-add-note" routerLinkActive="active">Dodaj notatkę</a></li>
+      <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-add-note" routerLinkActive="active">Dodaj notatkę</a></li>
+      <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-my-notes" routerLinkActive="active">Moje notatki</a></li>
+      <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-login" routerLinkActive="active">Zaloguj</a></li>
+      <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-registry" routerLinkActive="active">Rejestracja</a></li>
+      <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-all-notes" routerLinkActive="disabled" (click)="logout()">Wyloguj</a> </li>
     </ul>
   </nav>
 </div>

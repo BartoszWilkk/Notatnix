@@ -9,6 +9,11 @@ import { AllNotesComponent } from './all-notes/all-notes.component';
 import { AddNoteComponent } from './add-note/add-note.component';
 import {RouterModule, Routes} from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { EditNoteComponent } from './edit-note/edit-note.component';
+import { ViewNoteComponent } from './view-note/view-note.component';
+import { RegistryComponent } from './registry/registry.component';
+import { LoginComponent } from './login/login.component';
+import { MyNotesComponent } from './my-notes/my-notes.component';
 
 
 
@@ -20,6 +25,26 @@ const appRoutes: Routes = [
   {
     path: 'app-add-note',
     component: AddNoteComponent
+  },
+  {
+    path: 'app-edit-note',
+    component: EditNoteComponent
+  },
+  {
+    path: 'app-registry',
+    component: RegistryComponent
+  },
+  {
+    path: 'app-login',
+    component: LoginComponent
+  },
+  {
+    path: 'app-my-notes',
+    component: MyNotesComponent
+  },
+  {
+    path: 'app-view-note/:id',
+    component: ViewNoteComponent
   },
   {
     path: '',
@@ -37,7 +62,12 @@ const appRoutes: Routes = [
     AppComponent,
     AllNotesComponent,
     AddNoteComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EditNoteComponent,
+    ViewNoteComponent,
+    RegistryComponent,
+    LoginComponent,
+    MyNotesComponent
   ],
   imports: [
     BrowserModule,

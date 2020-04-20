@@ -1,0 +1,30 @@
+<p>Logowanie</p>
+<div class="div-center">
+  <div>
+    <div>
+      <label for="username">
+        Login:
+        <br>
+      </label>
+      <input id="username" [className]="usernameClass"
+             type="text" [(ngModel)]="username" (ngModelChange)="checkIsUsernameEmpty()">
+    </div>
+
+    <div>
+      <label for="password">
+        Hasło:
+        <br>
+      </label>
+      <input id="password" [className]="passwordClass"
+             type="password" [(ngModel)]="password" (ngModelChange)="checkIsPasswordEmpty()">
+    </div>
+
+
+    <button class="button" (click)="login()">Zaloguj</button>
+  </div>
+</div>
+<div class="div-center">
+  <div [hidden]="correctCredentials">
+    Błędny login lub hasło
+  </div>
+</div>

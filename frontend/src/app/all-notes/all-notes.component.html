@@ -2,7 +2,7 @@
   <div>Wszystkie notatki jakie znajdują się teraz w bazie!</div>
   <ul>
     <li *ngFor="let note of notes" class="all-notes-container-li">
-      <div class="all-notes-container">
+      <div class="all-notes-container" (click)="openNote(note.id)">
         id: {{note.id}}<br>
         title: {{note.title}}<br>
         description: {{note.description}}<br>

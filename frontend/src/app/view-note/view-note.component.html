@@ -1,0 +1,51 @@
+<br>
+
+<div [hidden]="viewModeHidden">
+  <div class="div-center">
+    <div>
+      id: {{note.id}}<br>
+      title: {{note.title}}<br>
+      description: {{note.description}}<br>
+      averageRating: {{note.averageRating}}
+    </div>
+  </div>
+  <div class="div-center">
+    <button class="button" (click)="editNote()">Edytuj notatkę</button>
+  </div>
+</div>
+
+<div [ngClass]="displayingDiv">
+  <div [hidden]="editModeHidden">
+    <div class="div-center">
+      <div>
+        <div>
+          <label for="title">
+            Tytuł:
+            <br>
+          </label>
+          <input id="title" [className]="titleClass"
+                 type="text" [(ngModel)]="title" (ngModelChange)="checkIsTitleEmpty()">
+        </div>
+
+        <div>
+          <label for="description">
+            Opis:
+            <br>
+          </label>
+          <input id="description" [className]="descriptionClass"
+                 type="text" [(ngModel)]="description" (ngModelChange)="checkIsDescriptionEmpty()">
+        </div>
+
+
+        <button class="button" (click)="saveChanges()">Zapisz zmiany</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div [ngClass]="displayingDiv">
+  <div [hidden]="noteAlreadyExistHidden">
+    <h2>Taka notatka już istnieje!</h2>
+  </div>
+</div>
