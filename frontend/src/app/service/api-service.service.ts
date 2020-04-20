@@ -12,12 +12,14 @@ export class ApiServiceService {
   private BASE_URL = 'http://localhost:8089';
 
   private ALL_NOTES = `${this.BASE_URL}/note/getAll`;
+  private GET_MY_NOTES = `${this.BASE_URL}/note/getMyNotes/`;
   private SAVE_NOTE = `${this.BASE_URL}/note/save`;
   private GET_NOTE = `${this.BASE_URL}/note/get/`;
   private EDIT_NOTE = `${this.BASE_URL}/note/edit/`;
   private EDIT_NOTE_CHECK_TITLE = `${this.BASE_URL}/note/edit/checkTitle/`;
   private LOGIN = `${this.BASE_URL}/user/login/`;
   private REGISTRY = `${this.BASE_URL}/user/save/`;
+  private GET_USER = `${this.BASE_URL}/user/get/`;
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +29,10 @@ export class ApiServiceService {
 
   getNote(id): Observable<Note> {
     return this.http.get<Note>(this.GET_NOTE + id);
+  }
+
+  getMyNotes(id): Observable<Note[]> {
+    return this.http.get<Note[]>(this.GET_MY_NOTES + id);
   }
 
   saveNote(note: Note): Observable<Note> {
@@ -45,5 +51,9 @@ export class ApiServiceService {
 
   registry(user: User): Observable<User> {
     return this.http.post<User>(this.REGISTRY, user);
+  }
+
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(this.GET_USER + id);
   }
 }

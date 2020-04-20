@@ -2,7 +2,7 @@
 
 <div [hidden]="viewModeHidden">
   <div class="div-center">
-    <div>
+    <div style="">
       id: {{note.id}}<br>
       title: {{note.title}}<br>
       description: {{note.description}}<br>
@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="div-center">
-    <button class="button" (click)="editNote()">Edytuj notatkę</button>
+    <button id="makeChanges" class="button" (click)="editNote()">Edytuj notatkę</button>
   </div>
 </div>
 

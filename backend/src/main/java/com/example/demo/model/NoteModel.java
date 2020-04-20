@@ -3,9 +3,18 @@ package com.example.demo.model;
 public class NoteModel {
 
     private String id;
+    private String user;
     private String title;
     private String description;
     private String averageRating;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public String getId() {
         return id;

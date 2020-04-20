@@ -1,34 +1,19 @@
 .all-notes-container{
-  align-items:
-    center;
-  background-color:
-    #949494;
-  display:
-    flex;
-  font-size:
-    20px;
-  font-weight:
-    500;
-  justify-content:
-    flex-start;
-  letter-spacing:
-    1.22px;
-  line-height:
-    27px;
-  padding:
-    10px 56px 10px 16px;
-  text-align:
-    center;
-  border-color:
-    #000000;
-  border-radius:
-    10px;
-  border-style:
-    solid;
-  border-width:
-    3px;
-  gap:
-    normal
+  align-items: center;
+  background-color: #949494;
+  display: flex;
+  font-size: 20px;
+  font-weight: 500;
+  justify-content: flex-start;
+  letter-spacing: 1.22px;
+  line-height: 27px;
+  padding: 10px 56px 10px 16px;
+  text-align: center;
+  border-color: #000000;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px;
+  gap: normal
 }
 
 .all-notes-container-li{

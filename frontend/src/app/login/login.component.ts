@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
             this.correctCredentials = false;
           } else {
             this.correctCredentials = true;
-            this.constants.login();
+            this.constants.login(res.id);
             alert('Zalogowano pomyślnie');
             this.router.navigateByUrl('/app-all-notes');
           }

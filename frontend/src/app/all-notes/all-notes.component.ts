@@ -18,6 +18,20 @@ export class AllNotesComponent implements OnInit {
     this.getAllNotes();
   }
 
+  // getUsernameById(id): string {
+  //   let username = '';
+  //   this.apiService.getUserById(id).subscribe(
+  //     res => {
+  //       console.log(res.username);
+  //       username = res.username;
+  //     },
+  //     error => {
+  //       alert('error w metodzie getUsernameById(id) w komponencie AllNotesComponent');
+  //     }
+  //   );
+  //   return username;
+  // }
+
   public getAllNotes() {
     this.apiService.getAllNotes().subscribe(
       res => {

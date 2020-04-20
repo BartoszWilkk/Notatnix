@@ -1,1 +1,17 @@
 <p>my-notes works!</p>
+<div>
+  <div>Wszystkie notatki jakie znajdują się teraz w bazie!</div>
+  <ul>
+    <li *ngFor="let note of notes" class="all-notes-container-li">
+      <div class="all-notes-container" (click)="openNote(note.id)">
+        Dodał użytkownik o id: {{note.user}}<br>
+        Tytuł: {{note.title}}<br>
+        Opis: {{note.description}}<br>
+        Średnia ocena: {{note.averageRating}}
+      </div>
+    </li>
+  </ul>
+
+
+
+</div>

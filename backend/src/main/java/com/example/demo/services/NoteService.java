@@ -4,11 +4,13 @@ import com.example.demo.entities.NoteEntity;
 import com.example.demo.mappers.NoteMapper;
 import com.example.demo.model.NoteModel;
 import com.example.demo.repositories.NoteRepository;
+import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
@@ -17,13 +19,19 @@ public class NoteService {
     private NoteMapper mapper;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private NoteRepository repository;
 
     public NoteModel save(NoteModel model) {
-        if (!repository.existsByTitle(model.getTitle())) {
-            NoteEntity entity = mapper.mapToEntity(model);
-            NoteEntity entityCreated = repository.save(entity);
-            return mapper.mapToModel(entityCreated);
+        if (model.getUser()!=null && userRepository.findById(Long.parseLong(model.getUser())).isPresent()){
+            if (!repository.existsByTitle(model.getTitle())) {
+                NoteEntity entity = mapper.mapToEntity(model);
+                NoteEntity entityCreated = repository.save(entity);
+                return mapper.mapToModel(entityCreated);
+            }
+            else return null;
         }
         else return null;
     }
@@ -63,4 +71,11 @@ public class NoteService {
         else return null;
     }
 
+    public List<NoteModel> getMyNotes(Long id) {
+        if (userRepository.findById(id).isPresent()){
+            List<NoteEntity> entityList = repository.findAllByUser(userRepository.findById(id).get());
+            return entityList.stream().map(entity -> mapper.mapToModel(entity)).collect(Collectors.toList());
+        }
+        else return null;
+    }
 }

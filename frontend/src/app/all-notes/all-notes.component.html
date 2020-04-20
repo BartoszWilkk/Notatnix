@@ -3,10 +3,10 @@
   <ul>
     <li *ngFor="let note of notes" class="all-notes-container-li">
       <div class="all-notes-container" (click)="openNote(note.id)">
-        id: {{note.id}}<br>
-        title: {{note.title}}<br>
-        description: {{note.description}}<br>
-        averageRating: {{note.averageRating}}
+        Dodał użytkownik o id: {{note.user}}<br>
+        Tytuł: {{note.title}}<br>
+        Opis: {{note.description}}<br>
+        Średnia ocena: {{note.averageRating}}
       </div>
     </li>
   </ul>

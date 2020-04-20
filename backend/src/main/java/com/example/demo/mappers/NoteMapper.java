@@ -1,11 +1,17 @@
 package com.example.demo.mappers;
 
 import com.example.demo.entities.NoteEntity;
+import com.example.demo.entities.UserEntity;
 import com.example.demo.model.NoteModel;
+import com.example.demo.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NoteMapper {
+
+    @Autowired
+    UserRepository userRepository;
 
     public NoteEntity mapToEntity(NoteModel model){
         NoteEntity entity = new NoteEntity();
@@ -13,6 +19,8 @@ public class NoteMapper {
         if (id != null){
             entity.setId(Long.parseLong(id));
         }
+        UserEntity userEntity = userRepository.findById(Long.parseLong(model.getUser())).get();
+        entity.setUser(userEntity);
         entity.setTitle(model.getTitle());
         entity.setDescription(model.getDescription());
         String averageRating = model.getAverageRating();
@@ -25,6 +33,7 @@ public class NoteMapper {
     public NoteModel mapToModel(NoteEntity entity){
         NoteModel model = new NoteModel();
         model.setId(entity.getId().toString());
+        model.setUser(entity.getUser().getId().toString());
         model.setTitle(entity.getTitle());
         model.setDescription(entity.getDescription());
         model.setAverageRating(""+entity.getAverageRating());

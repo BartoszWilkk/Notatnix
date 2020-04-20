@@ -70,10 +70,12 @@ export class AddNoteComponent implements OnInit {
     if (this.notEmptyData) {
       const note: Note = {
         id: null,
+        user: GlobalConstants.user,
         title: this.title,
         description: this.description,
         averageRating: null
       };
+      console.log(GlobalConstants.user);
       this.dataBaseService.saveNote(note).subscribe(
         res => {
           if (res == null) {

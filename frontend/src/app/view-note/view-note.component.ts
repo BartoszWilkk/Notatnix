@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, Route, Router} from '@angular/router';
 import {Note} from '../model/note';
 import {ApiServiceService} from '../service/api-service.service';
+import {GlobalConstants} from '../global-constants';
 
 @Component({
   selector: 'app-view-note',
@@ -27,6 +28,7 @@ export class ViewNoteComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    let userId;
     this.displayingDiv = 'hide-div';
     this.editModeHidden = true;
     this.viewModeHidden = false;
@@ -36,6 +38,11 @@ export class ViewNoteComponent implements OnInit {
         this.note = res;
         this.title = this.note.title;
         this.description = this.note.description;
+        userId = this.note.user;
+        if (this.note.user !== GlobalConstants.user) {
+          // this.router.navigateByUrl('/app-all-notes');
+          document.getElementById('makeChanges').style.display = 'none';
+        }
       },
       err => {
         alert('Ann error occurred, cannot get note to view from database in ViewNoteComponent');
@@ -87,6 +94,7 @@ export class ViewNoteComponent implements OnInit {
     if (this.notEmptyData) {
       const editedNote: Note = {
         id: this.note.id,
+        user: this.note.user,
         title: this.title,
         description: this.description,
         averageRating: this.note.averageRating

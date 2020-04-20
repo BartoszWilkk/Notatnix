@@ -40,4 +40,9 @@ public class NoteController {
         return service.getNote(id);
     }
 
+    @RequestMapping("getMyNotes/{id}")
+    public List<NoteModel> getMyNotes(@PathVariable Long id){
+        return service.getMyNotes(id);
+    }
+
 }

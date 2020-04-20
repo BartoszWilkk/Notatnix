@@ -91,7 +91,7 @@ export class RegistryComponent implements OnInit {
             this.loginAlreadyUsed = true;
           } else {
             this.loginAlreadyUsed = false;
-            this.constants.login();
+            this.constants.login(res.id);
             alert('Zarejestrowano pomyślnie');
             this.router.navigateByUrl('/app-all-notes');
           }
