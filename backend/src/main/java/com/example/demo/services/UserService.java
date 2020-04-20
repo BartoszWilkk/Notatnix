@@ -7,10 +7,14 @@ import com.example.demo.model.Credentials;
 import com.example.demo.model.UserModel;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     UserMapper mapper;
@@ -21,6 +25,7 @@ public class UserService {
     public UserModel save(UserModel model) {
         if (!repository.existsByUsername(model.getUsername())){
             UserEntity entity = mapper.mapToEntity(model);
+//            entity.setPassword(bCryptPasswordEncoder.d);
             UserEntity entityCreated = repository.save(entity);
             return mapper.mapToModel(entityCreated);
         }
@@ -35,6 +40,11 @@ public class UserService {
     }
 
     public UserModel login(Credentials credentials) {
+
+        String s = bCryptPasswordEncoder.encode(credentials.getPassword());
+        System.out.println(s);
+        System.out.println(bCryptPasswordEncoder.matches(credentials.getPassword(), s));
+
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         if (repository.existsByUsername(username)) {
