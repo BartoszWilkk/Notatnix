@@ -81,7 +81,6 @@ export class AddNoteComponent implements OnInit {
           if (res == null) {
             this.hideMessageNoteAlreadyExist = false;
           } else {
-            alert('Pomyślnie dodano notatkę');
             this.router.navigateByUrl('/app-all-notes');
           }
         },

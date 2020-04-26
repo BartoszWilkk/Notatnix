@@ -72,7 +72,6 @@ export class LoginComponent implements OnInit {
           } else {
             this.correctCredentials = true;
             this.constants.login(res.id);
-            alert('Zalogowano pomyślnie');
             this.router.navigateByUrl('/app-all-notes');
           }
         },

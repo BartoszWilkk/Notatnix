@@ -92,7 +92,6 @@ export class RegistryComponent implements OnInit {
           } else {
             this.loginAlreadyUsed = false;
             this.constants.login(res.id);
-            alert('Zarejestrowano pomyślnie');
             this.router.navigateByUrl('/app-all-notes');
           }
         },

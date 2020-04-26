@@ -25,7 +25,7 @@ public class UserService {
     public UserModel save(UserModel model) {
         if (!repository.existsByUsername(model.getUsername())){
             UserEntity entity = mapper.mapToEntity(model);
-//            entity.setPassword(bCryptPasswordEncoder.d);
+            entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
             UserEntity entityCreated = repository.save(entity);
             return mapper.mapToModel(entityCreated);
         }
@@ -41,15 +41,15 @@ public class UserService {
 
     public UserModel login(Credentials credentials) {
 
-        String s = bCryptPasswordEncoder.encode(credentials.getPassword());
-        System.out.println(s);
-        System.out.println(bCryptPasswordEncoder.matches(credentials.getPassword(), s));
+//        String s = bCryptPasswordEncoder.encode(credentials.getPassword());
+//        System.out.println(s);
+//        System.out.println(bCryptPasswordEncoder.matches(credentials.getPassword(), s));
 
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         if (repository.existsByUsername(username)) {
             UserEntity entity = repository.findUserEntityByUsername(username);
-            if (entity.getPassword().equals(password)) {
+            if (bCryptPasswordEncoder.matches(password, entity.getPassword())) {
                 return mapper.mapToModel(entity);
             }
             else {

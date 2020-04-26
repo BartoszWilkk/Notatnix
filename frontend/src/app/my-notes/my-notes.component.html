@@ -1,6 +1,4 @@
-<p>my-notes works!</p>
 <div>
-  <div>Wszystkie notatki jakie znajdują się teraz w bazie!</div>
   <ul>
     <li *ngFor="let note of notes" class="all-notes-container-li">
       <div class="all-notes-container" (click)="openNote(note.id)">
