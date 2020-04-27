@@ -3,15 +3,21 @@ package com.example.demo.mappers;
 import com.example.demo.entities.NoteEntity;
 import com.example.demo.entities.UserEntity;
 import com.example.demo.model.NoteModel;
+import com.example.demo.repositories.FileRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class NoteMapper {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    FileRepository fileRepository;
 
     public NoteEntity mapToEntity(NoteModel model){
         NoteEntity entity = new NoteEntity();
@@ -26,6 +32,12 @@ public class NoteMapper {
         String averageRating = model.getAverageRating();
         if (averageRating != null){
             entity.setAverageRating(Double.parseDouble(averageRating));
+        }
+        if (!model.getFiles().isEmpty()) {
+            List<String> files = model.getFiles();
+            for (String fileId:files) {
+                fileRepository.findById(Long.valueOf(fileId)).ifPresent(entity::addFile);
+            }
         }
         return entity;
     }

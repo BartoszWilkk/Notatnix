@@ -73,7 +73,8 @@ export class AddNoteComponent implements OnInit {
         user: GlobalConstants.user,
         title: this.title,
         description: this.description,
-        averageRating: null
+        averageRating: null,
+        files: null
       };
       console.log(GlobalConstants.user);
       this.dataBaseService.saveNote(note).subscribe(

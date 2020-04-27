@@ -3,6 +3,7 @@ import {ActivatedRoute, ActivatedRouteSnapshot, Route, Router} from '@angular/ro
 import {Note} from '../model/note';
 import {ApiServiceService} from '../service/api-service.service';
 import {GlobalConstants} from '../global-constants';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-view-note',
@@ -13,6 +14,9 @@ export class ViewNoteComponent implements OnInit {
   note: Note;
   editModeHidden = true;
   viewModeHidden = false;
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  progress: { percentage: number } = { percentage: 0 };
 
   private displayingDiv;
   private title;
@@ -43,6 +47,7 @@ export class ViewNoteComponent implements OnInit {
           // this.router.navigateByUrl('/app-all-notes');
           document.getElementById('makeChanges').style.display = 'none';
         }
+
       },
       err => {
         alert('Ann error occurred, cannot get note to view from database in ViewNoteComponent');
@@ -90,6 +95,7 @@ export class ViewNoteComponent implements OnInit {
   }
 
   saveChanges() {
+    this.upload();
     this.checkIsDataEmpty();
     if (this.notEmptyData) {
       const editedNote: Note = {
@@ -97,7 +103,9 @@ export class ViewNoteComponent implements OnInit {
         user: this.note.user,
         title: this.title,
         description: this.description,
-        averageRating: this.note.averageRating
+        averageRating: this.note.averageRating,
+        // tutaj trzeba sprawdzic o co biega
+        files: null
       };
       let checkTitle = true;
       if (this.note.title === this.title) {
@@ -117,6 +125,26 @@ export class ViewNoteComponent implements OnInit {
         },
         err => {
           alert('Error w metodzie saveChanges() w komponencie ViewNoteComponent');
+        }
+      );
+    }
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload() {
+    if (this.selectedFiles != null) {
+      this.progress.percentage = 0;
+      this.currentFileUpload = this.selectedFiles.item(0);
+      this.dataBaseService.saveFile(this.currentFileUpload, this.note.id).subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.progress.percentage = Math.round(100 * event.loaded / event.total);
+          } else if (event instanceof HttpResponse) {
+            alert('File Successfully Uploaded');
+          }
+          this.selectedFiles = undefined;
         }
       );
     }

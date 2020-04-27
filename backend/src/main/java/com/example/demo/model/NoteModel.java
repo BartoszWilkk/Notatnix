@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 public class NoteModel {
 
     private String id;
@@ -7,6 +9,15 @@ public class NoteModel {
     private String title;
     private String description;
     private String averageRating;
+    private List<String> files;
+
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
+    }
 
     public String getUser() {
         return user;

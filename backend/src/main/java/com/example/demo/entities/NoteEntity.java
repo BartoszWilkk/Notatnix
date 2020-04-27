@@ -1,11 +1,15 @@
 package com.example.demo.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "Note")
+@Table(name = "note")
 public class NoteEntity {
 
     @Id
@@ -17,9 +21,21 @@ public class NoteEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @OneToMany(mappedBy = "noteEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    protected List<FileEntity> files = new ArrayList<>();
+
     private String title;
     private String description;
     private double averageRating;
+
+    public List<FileEntity> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<FileEntity> files) {
+        this.files = files;
+    }
 
     public UserEntity getUser() {
         return user;
@@ -27,6 +43,10 @@ public class NoteEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public void addFile(FileEntity fileEntity) {
+        files.add(fileEntity);
     }
 
     public Long getId() {

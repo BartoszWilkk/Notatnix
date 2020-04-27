@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Note} from '../model/note';
 import {Credentials} from '../model/credentials';
 import {User} from '../model/user';
+import {FileModel} from '../model/fileModel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,13 @@ export class ApiServiceService {
   private GET_NOTE = `${this.BASE_URL}/note/get/`;
   private EDIT_NOTE = `${this.BASE_URL}/note/edit/`;
   private EDIT_NOTE_CHECK_TITLE = `${this.BASE_URL}/note/edit/checkTitle/`;
+
   private LOGIN = `${this.BASE_URL}/user/login/`;
   private REGISTRY = `${this.BASE_URL}/user/save/`;
   private GET_USER = `${this.BASE_URL}/user/get/`;
+
+  private SAVE_FILE = `${this.BASE_URL}/file/save/`;
+  private GET_FILE_BY_NOTE = `${this.BASE_URL}/file/getByNoteId/`;
 
   constructor(private http: HttpClient) { }
 
@@ -55,5 +60,19 @@ export class ApiServiceService {
 
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(this.GET_USER + id);
+  }
+
+  saveFile(file: File, id: string): Observable<HttpEvent<{}>> {
+    const data: FormData = new FormData();
+    data.append('file', file);
+    const newRequest = new HttpRequest('POST', this.SAVE_FILE + id, data, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.http.request(newRequest);
+  }
+
+  getFilesByNoteId(id: string): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(this.GET_FILE_BY_NOTE + id);
   }
 }
