@@ -17,14 +17,18 @@ export class LoginComponent implements OnInit {
   passwordClass;
   correctCredentials;
   private notEmptyData;
-  constructor(private constants: GlobalConstants, private router: Router, private dataBaseService: ApiServiceService) { }
+
+  constructor(private constants: GlobalConstants, private router: Router, private dataBaseService: ApiServiceService) {
+  }
 
   ngOnInit() {
     this.usernameClass = 'correct';
     this.passwordClass = 'correct';
     this.notEmptyData = true;
     this.correctCredentials = true;
+    this.loginAutomaticForDeveloper();
   }
+
   checkIsUsernameEmpty(): boolean {
     let returnVal = true;
     if (this.username == null || this.username === '') {
@@ -80,5 +84,11 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
+
+  loginAutomaticForDeveloper() {
+    this.username = 'user';
+    this.password = 'user';
+    this.login();
   }
 }

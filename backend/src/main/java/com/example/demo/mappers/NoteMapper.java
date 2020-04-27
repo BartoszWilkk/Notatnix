@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class NoteMapper {
@@ -33,7 +34,7 @@ public class NoteMapper {
         if (averageRating != null){
             entity.setAverageRating(Double.parseDouble(averageRating));
         }
-        if (!model.getFiles().isEmpty()) {
+        if (model.getFiles() != null) {
             List<String> files = model.getFiles();
             for (String fileId:files) {
                 fileRepository.findById(Long.valueOf(fileId)).ifPresent(entity::addFile);
@@ -49,6 +50,9 @@ public class NoteMapper {
         model.setTitle(entity.getTitle());
         model.setDescription(entity.getDescription());
         model.setAverageRating(""+entity.getAverageRating());
+        if (entity.getFiles() != null) {
+            entity.getFiles().forEach(fileEntity -> model.addFile(fileEntity.getId().toString()));
+        }
         return model;
     }
 }

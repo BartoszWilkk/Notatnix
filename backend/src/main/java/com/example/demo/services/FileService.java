@@ -49,6 +49,7 @@ public class FileService {
                 FileEntity fileEntityCreated = repository.save(fileEntity);
                 repository.flush();
                 noteEntity.addFile(fileEntity);
+                noteRepository.save(noteEntity);
                 return mapper.mapToModel(fileEntityCreated);
             }
             else {

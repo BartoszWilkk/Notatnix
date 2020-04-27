@@ -2,11 +2,17 @@
 
 <div [hidden]="viewModeHidden">
   <div class="div-center">
-    <div style="">
+    <div>
       id: {{note.id}}<br>
       title: {{note.title}}<br>
       description: {{note.description}}<br>
-      averageRating: {{note.averageRating}}
+      averageRating: {{note.averageRating}}<br>
+      files:
+      <ul>
+        <li *ngFor="let file of this.files" (click)="downloadFile(file.id)">
+          {{file.name}}
+        </li>
+      </ul>
     </div>
   </div>
   <div class="div-center">

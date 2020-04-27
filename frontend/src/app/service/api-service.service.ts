@@ -10,7 +10,7 @@ import {FileModel} from '../model/fileModel';
   providedIn: 'root'
 })
 export class ApiServiceService {
-  private BASE_URL = 'http://localhost:8089';
+  private BASE_URL = 'http://localhost:8088';
 
   private ALL_NOTES = `${this.BASE_URL}/note/getAll`;
   private GET_MY_NOTES = `${this.BASE_URL}/note/getMyNotes/`;
@@ -25,6 +25,7 @@ export class ApiServiceService {
 
   private SAVE_FILE = `${this.BASE_URL}/file/save/`;
   private GET_FILE_BY_NOTE = `${this.BASE_URL}/file/getByNoteId/`;
+  public DOWNLOAD_FILE = `${this.BASE_URL}/file/get/`;
 
   constructor(private http: HttpClient) { }
 
@@ -74,5 +75,9 @@ export class ApiServiceService {
 
   getFilesByNoteId(id: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.GET_FILE_BY_NOTE + id);
+  }
+
+  downloadFile(id: string) {
+    return this.http.get<File>(this.DOWNLOAD_FILE + id);
   }
 }

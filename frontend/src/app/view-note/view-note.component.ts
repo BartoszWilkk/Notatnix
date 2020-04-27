@@ -4,6 +4,7 @@ import {Note} from '../model/note';
 import {ApiServiceService} from '../service/api-service.service';
 import {GlobalConstants} from '../global-constants';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {FileModel} from '../model/fileModel';
 
 @Component({
   selector: 'app-view-note',
@@ -17,6 +18,7 @@ export class ViewNoteComponent implements OnInit {
   selectedFiles: FileList;
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
+  files: FileModel[] = [];
 
   private displayingDiv;
   private title;
@@ -30,30 +32,91 @@ export class ViewNoteComponent implements OnInit {
 
   constructor(private dataBaseService: ApiServiceService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     let userId;
     this.displayingDiv = 'hide-div';
     this.editModeHidden = true;
     this.viewModeHidden = false;
     this.noteAlreadyExistHidden = true;
-    this.dataBaseService.getNote(id).subscribe(
+    this.note = await this.dataBaseService.getNote(id).toPromise();
+    this.title = this.note.title;
+    this.description = this.note.description;
+    userId = this.note.user;
+    if (this.note.user !== GlobalConstants.user) {
+      // this.router.navigateByUrl('/app-all-notes');
+      document.getElementById('makeChanges').style.display = 'none';
+    }
+    // this.dataBaseService.getNote(id).toPromise().then(data => {
+    //   this.note = data;
+    //   this.title = this.note.title;
+    //   this.description = this.note.description;
+    //   userId = this.note.user;
+    //   if (this.note.user !== GlobalConstants.user) {
+    //     // this.router.navigateByUrl('/app-all-notes');
+    //     document.getElementById('makeChanges').style.display = 'none';
+    //   }
+    // });
+    // this.dataBaseService.getNote(id).subscribe(
+    //   res => {
+    //     this.note = res;
+    //     this.title = this.note.title;
+    //     this.description = this.note.description;
+    //     userId = this.note.user;
+    //     if (this.note.user !== GlobalConstants.user) {
+    //       // this.router.navigateByUrl('/app-all-notes');
+    //       document.getElementById('makeChanges').style.display = 'none';
+    //     }
+    //
+    //   },
+    //   err => {
+    //     alert('An error occurred, cannot get note to view from database in ViewNoteComponent');
+    //   }
+    // );
+    console.log('teraz umiem czekac: ' + this.note.id);
+    this.dataBaseService.getFilesByNoteId(id).subscribe(
       res => {
-        this.note = res;
-        this.title = this.note.title;
-        this.description = this.note.description;
-        userId = this.note.user;
-        if (this.note.user !== GlobalConstants.user) {
-          // this.router.navigateByUrl('/app-all-notes');
-          document.getElementById('makeChanges').style.display = 'none';
-        }
-
+        this.files = res;
       },
-      err => {
-        alert('Ann error occurred, cannot get note to view from database in ViewNoteComponent');
+      error => {
+        alert('Error w metodzie ngOnInit() w linii 63 w komponencie ViewNoteComponent');
       }
     );
   }
+
+  // ngOnInit() {
+  //   const id = this.route.snapshot.paramMap.get('id');
+  //   let userId;
+  //   this.displayingDiv = 'hide-div';
+  //   this.editModeHidden = true;
+  //   this.viewModeHidden = false;
+  //   this.noteAlreadyExistHidden = true;
+  //   this.dataBaseService.getNote(id).subscribe(
+  //     res => {
+  //       this.note = res;
+  //       this.title = this.note.title;
+  //       this.description = this.note.description;
+  //       userId = this.note.user;
+  //       if (this.note.user !== GlobalConstants.user) {
+  //         // this.router.navigateByUrl('/app-all-notes');
+  //         document.getElementById('makeChanges').style.display = 'none';
+  //       }
+  //
+  //     },
+  //     err => {
+  //       alert('An error occurred, cannot get note to view from database in ViewNoteComponent');
+  //     }
+  //   );
+  //   // alert(this.note.id);
+  //   this.dataBaseService.getFilesByNoteId(id).subscribe(
+  //     res => {
+  //       this.files = res;
+  //     },
+  //     error => {
+  //       alert('Error w metodzie ngOnInit() w linii 63 w komponencie ViewNoteComponent');
+  //     }
+  //   );
+  // }
 
   editNote() {
     this.viewModeHidden = true;
@@ -105,7 +168,7 @@ export class ViewNoteComponent implements OnInit {
         description: this.description,
         averageRating: this.note.averageRating,
         // tutaj trzeba sprawdzic o co biega
-        files: null
+        files: this.note.files
       };
       let checkTitle = true;
       if (this.note.title === this.title) {
@@ -149,5 +212,16 @@ export class ViewNoteComponent implements OnInit {
       );
     }
   }
+  //
+  // getFile(id) {
+  //   this.dataBaseService.get
+  // }
 
+  downloadFile(id: string) {
+    const link = document.createElement('a');
+    link.setAttribute('href', this.dataBaseService.DOWNLOAD_FILE + id);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
 }

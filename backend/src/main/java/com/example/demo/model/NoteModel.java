@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteModel {
@@ -9,7 +10,11 @@ public class NoteModel {
     private String title;
     private String description;
     private String averageRating;
-    private List<String> files;
+    private List<String> files = new ArrayList<>();
+
+    public void addFile(String fileId) {
+        files.add(fileId);
+    }
 
     public List<String> getFiles() {
         return files;
