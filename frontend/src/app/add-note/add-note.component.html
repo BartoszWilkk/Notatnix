@@ -19,6 +19,9 @@
              type="text" [(ngModel)]="description" (ngModelChange)="checkIsDescriptionEmpty()">
     </div>
 
+    <div>
+      <input type="file" id="customFile" (change)="selectFile($event)"><br>
+    </div>
 
     <button class="button" (click)="submit()">Dodaj notatkę</button>
   </div>

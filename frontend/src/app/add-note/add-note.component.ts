@@ -3,6 +3,7 @@ import {ApiServiceService} from '../service/api-service.service';
 import {Note} from '../model/note';
 import {Router} from '@angular/router';
 import {GlobalConstants} from '../global-constants';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-add-note',
@@ -11,6 +12,9 @@ import {GlobalConstants} from '../global-constants';
 })
 export class AddNoteComponent implements OnInit {
 
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  progress: { percentage: number } = { percentage: 0 };
   private title;
   private description;
 
@@ -65,7 +69,7 @@ export class AddNoteComponent implements OnInit {
     }
   }
 
-  submit() {
+  async submit() {
     this.checkIsDataEmpty();
     if (this.notEmptyData) {
       const note: Note = {
@@ -77,16 +81,44 @@ export class AddNoteComponent implements OnInit {
         files: null
       };
       console.log(GlobalConstants.user);
-      this.dataBaseService.saveNote(note).subscribe(
-        res => {
-          if (res == null) {
-            this.hideMessageNoteAlreadyExist = false;
-          } else {
-            this.router.navigateByUrl('/app-all-notes');
+      // this.dataBaseService.saveNote(note).subscribe(
+      //   res => {
+      //     if (res == null) {
+      //       this.hideMessageNoteAlreadyExist = false;
+      //     } else {
+      //       this.router.navigateByUrl('/app-all-notes');
+      //     }
+      //   },
+      //   err => {
+      //     alert('Error w metodzie submit() w komponencie AddNoteComponent');
+      //   }
+      // );
+      const noteSaved = await this.dataBaseService.saveNote(note).toPromise();
+      if (noteSaved != null) {
+        this.upload(noteSaved.id);
+        await this.router.navigateByUrl('/app-all-notes');
+      } else {
+        alert('Nie udalo sie zapisac nowej notatki -> async submit() w komponencie AddNoteComponent');
+        await this.router.navigateByUrl('/app-all-notes');
+      }
+    }
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(id) {
+    if (this.selectedFiles != null) {
+      this.progress.percentage = 0;
+      this.currentFileUpload = this.selectedFiles.item(0);
+      this.dataBaseService.saveFile(this.currentFileUpload, id).subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.progress.percentage = Math.round(100 * event.loaded / event.total);
+          } else if (event instanceof HttpResponse) {
+            alert('File Successfully Uploaded');
           }
-        },
-        err => {
-          alert('Error w metodzie submit() w komponencie AddNoteComponent');
+          this.selectedFiles = undefined;
         }
       );
     }
