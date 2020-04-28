@@ -19,6 +19,14 @@ public class RateEntity {
         return rateId;
     }
 
+    public RateEntity() {
+    }
+
+    public RateEntity(RateId rateId, int rate) {
+        this.rateId = rateId;
+        this.rate = rate;
+    }
+
     public void setRateId(RateId rateId) {
         this.rateId = rateId;
     }
