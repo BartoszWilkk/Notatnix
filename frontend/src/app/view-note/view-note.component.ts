@@ -224,4 +224,10 @@ export class ViewNoteComponent implements OnInit {
     link.click();
     link.remove();
   }
+
+  // async getUrl(file): Promise<string> {
+  //   const fileDownloaded = await this.dataBaseService.downloadFile2(file);
+  //   // const url = URL.createObjectURL(fileDownloaded);
+  //   return fileDownloaded;
+  // }
 }

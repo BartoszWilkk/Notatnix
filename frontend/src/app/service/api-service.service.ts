@@ -5,6 +5,9 @@ import {Note} from '../model/note';
 import {Credentials} from '../model/credentials';
 import {User} from '../model/user';
 import {FileModel} from '../model/fileModel';
+import {resolve} from 'url';
+import * as url from 'url';
+// import {url} from 'inspector';
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +80,16 @@ export class ApiServiceService {
     return this.http.get<FileModel[]>(this.GET_FILE_BY_NOTE + id);
   }
 
-  downloadFile(id: string) {
+  downloadFile(id: string): Observable<File> {
     return this.http.get<File>(this.DOWNLOAD_FILE + id);
+  }
+
+  downloadFile2(id: string): string {
+    let fileUrl;
+    this.http.get(this.DOWNLOAD_FILE + id, {responseType: 'blob'}).toPromise().then((res) => {
+      fileUrl = (window.URL).createObjectURL(res);
+      resolve({file: fileUrl, type: url.type, name: url.name});
+    });
+    return fileUrl;
   }
 }

@@ -21,6 +21,7 @@
 
     <div>
       <input type="file" id="customFile" (change)="selectFile($event)"><br>
+      <ngx-doc-viewer [url]="url" viewer="url" style="width:100%;height:50vh;"></ngx-doc-viewer>
     </div>
 
     <button class="button" (click)="submit()">Dodaj notatkę</button>

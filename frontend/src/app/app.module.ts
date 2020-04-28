@@ -14,6 +14,7 @@ import { ViewNoteComponent } from './view-note/view-note.component';
 import { RegistryComponent } from './registry/registry.component';
 import { LoginComponent } from './login/login.component';
 import { MyNotesComponent } from './my-notes/my-notes.component';
+import {NgxDocViewerModule} from 'ngx-doc-viewer';
 
 
 
@@ -77,7 +78,8 @@ const appRoutes: Routes = [
       appRoutes,
       {enableTracing: true}
     ),
-    FormsModule
+    FormsModule,
+    [NgxDocViewerModule]
   ],
   providers: [
     ApiServiceService

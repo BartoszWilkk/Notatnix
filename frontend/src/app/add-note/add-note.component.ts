@@ -11,6 +11,7 @@ import {HttpEventType, HttpResponse} from '@angular/common/http';
   styleUrls: ['./add-note.component.css']
 })
 export class AddNoteComponent implements OnInit {
+  url: string;
 
   selectedFiles: FileList;
   currentFileUpload: File;
@@ -106,6 +107,22 @@ export class AddNoteComponent implements OnInit {
 
   selectFile(event) {
     this.selectedFiles = event.target.files;
+    this.url = URL.createObjectURL(event.target.files[0]);
+
+
+
+    console.log(this.url);
+    // const input = document.getElementById('customFile');
+    // this.url = URL.createObjectURL(event.target.files);
+
+    // if (event.target.files && event.target.files[0]) {
+    //   const reader = new FileReader();
+    //
+    //   reader.readAsDataURL(event.target.files[0]); // read file as data url
+    //   reader.onload = (event) => { // called once readAsDataURL is completed
+    //     this.url = event.target.result;
+    //   };
+    // }
   }
 
   upload(id) {

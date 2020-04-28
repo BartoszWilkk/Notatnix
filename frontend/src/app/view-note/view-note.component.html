@@ -10,7 +10,9 @@
       files:
       <ul>
         <li *ngFor="let file of this.files" (click)="downloadFile(file.id)">
-          {{file.name}}
+          {{file.name}}<br>
+<!--          {{getUrl(file.id)}}-->
+<!--          <ngx-doc-viewer [url]="getUrl(file).toString()" viewer="url" style="width:100%;height:50vh;"></ngx-doc-viewer>-->
         </li>
       </ul>
     </div>
