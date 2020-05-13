@@ -9,11 +9,33 @@ public class NoteModel {
     private String user;
     private String title;
     private String description;
+    private String userName;
     private String averageRating;
+    private List<String> tags = new ArrayList<>();
     private List<String> files = new ArrayList<>();
+
+    public void addTag(String tag) {
+        tags.add(tag);
+    }
 
     public void addFile(String fileId) {
         files.add(fileId);
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public List<String> getFiles() {

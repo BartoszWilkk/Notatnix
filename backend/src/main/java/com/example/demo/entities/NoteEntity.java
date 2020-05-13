@@ -27,7 +27,16 @@ public class NoteEntity {
 
     private String title;
     private String description;
+    private String userName;
     private double averageRating;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public List<FileEntity> getFiles() {
         return files;

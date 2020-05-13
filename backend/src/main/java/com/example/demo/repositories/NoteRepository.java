@@ -10,4 +10,8 @@ import java.util.List;
 public interface NoteRepository extends JpaRepository<NoteEntity, Long> {
     boolean existsByTitle(String title);
     List<NoteEntity> findAllByUser(UserEntity entity);
+    List<NoteEntity> findAllByTitleContaining(String title);
+    List<NoteEntity> findAllByDescriptionContaining(String description);
+    List<NoteEntity> findAllByUserNameContaining(String userName);
+    List<NoteEntity> findAllByTitleContainingAndDescriptionContainingAndUserNameContaining(String title, String description, String userName);
 }

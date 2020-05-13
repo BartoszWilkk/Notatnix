@@ -122,4 +122,36 @@ public class RateService {
         }
         else return null;
     }
+
+    public RateRepository getRepository() {
+        return repository;
+    }
+
+    public void setRepository(RateRepository repository) {
+        this.repository = repository;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public NoteRepository getNoteRepository() {
+        return noteRepository;
+    }
+
+    public void setNoteRepository(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
+    }
+
+    public RateMapper getMapper() {
+        return mapper;
+    }
+
+    public void setMapper(RateMapper mapper) {
+        this.mapper = mapper;
+    }
 }
