@@ -20,6 +20,8 @@ export class ViewNoteComponent implements OnInit {
   progress: { percentage: number } = { percentage: 0 };
   files: FileModel[] = [];
 
+  private tagTmp = '';
+
   private displayingDiv;
   private title;
   private description;
@@ -47,33 +49,9 @@ export class ViewNoteComponent implements OnInit {
       // this.router.navigateByUrl('/app-all-notes');
       document.getElementById('makeChanges').style.display = 'none';
     }
-    // this.dataBaseService.getNote(id).toPromise().then(data => {
-    //   this.note = data;
-    //   this.title = this.note.title;
-    //   this.description = this.note.description;
-    //   userId = this.note.user;
-    //   if (this.note.user !== GlobalConstants.user) {
-    //     // this.router.navigateByUrl('/app-all-notes');
-    //     document.getElementById('makeChanges').style.display = 'none';
-    //   }
-    // });
-    // this.dataBaseService.getNote(id).subscribe(
-    //   res => {
-    //     this.note = res;
-    //     this.title = this.note.title;
-    //     this.description = this.note.description;
-    //     userId = this.note.user;
-    //     if (this.note.user !== GlobalConstants.user) {
-    //       // this.router.navigateByUrl('/app-all-notes');
-    //       document.getElementById('makeChanges').style.display = 'none';
-    //     }
-    //
-    //   },
-    //   err => {
-    //     alert('An error occurred, cannot get note to view from database in ViewNoteComponent');
-    //   }
-    // );
-    console.log('teraz umiem czekac: ' + this.note.id);
+    if (!GlobalConstants.logged) {
+      document.getElementById('add-rate-button').style.display = 'none';
+    }
     this.dataBaseService.getFilesByNoteId(id).subscribe(
       res => {
         this.files = res;
@@ -83,40 +61,6 @@ export class ViewNoteComponent implements OnInit {
       }
     );
   }
-
-  // ngOnInit() {
-  //   const id = this.route.snapshot.paramMap.get('id');
-  //   let userId;
-  //   this.displayingDiv = 'hide-div';
-  //   this.editModeHidden = true;
-  //   this.viewModeHidden = false;
-  //   this.noteAlreadyExistHidden = true;
-  //   this.dataBaseService.getNote(id).subscribe(
-  //     res => {
-  //       this.note = res;
-  //       this.title = this.note.title;
-  //       this.description = this.note.description;
-  //       userId = this.note.user;
-  //       if (this.note.user !== GlobalConstants.user) {
-  //         // this.router.navigateByUrl('/app-all-notes');
-  //         document.getElementById('makeChanges').style.display = 'none';
-  //       }
-  //
-  //     },
-  //     err => {
-  //       alert('An error occurred, cannot get note to view from database in ViewNoteComponent');
-  //     }
-  //   );
-  //   // alert(this.note.id);
-  //   this.dataBaseService.getFilesByNoteId(id).subscribe(
-  //     res => {
-  //       this.files = res;
-  //     },
-  //     error => {
-  //       alert('Error w metodzie ngOnInit() w linii 63 w komponencie ViewNoteComponent');
-  //     }
-  //   );
-  // }
 
   editNote() {
     this.viewModeHidden = true;
@@ -166,7 +110,9 @@ export class ViewNoteComponent implements OnInit {
         user: this.note.user,
         title: this.title,
         description: this.description,
+        userName: this.note.userName,
         averageRating: this.note.averageRating,
+        tags: this.note.tags,
         // tutaj trzeba sprawdzic o co biega
         files: this.note.files
       };
@@ -212,10 +158,6 @@ export class ViewNoteComponent implements OnInit {
       );
     }
   }
-  //
-  // getFile(id) {
-  //   this.dataBaseService.get
-  // }
 
   downloadFile(id: string) {
     const link = document.createElement('a');
@@ -225,9 +167,41 @@ export class ViewNoteComponent implements OnInit {
     link.remove();
   }
 
-  // async getUrl(file): Promise<string> {
-  //   const fileDownloaded = await this.dataBaseService.downloadFile2(file);
-  //   // const url = URL.createObjectURL(fileDownloaded);
-  //   return fileDownloaded;
-  // }
+  addOneTagToTagsList(event) {
+    if (event.key === 'Enter') {
+      if (this.tagTmp !== '') {
+        if (!this.note.tags.includes(this.tagTmp)) {
+          this.note.tags.push(this.tagTmp);
+          this.tagTmp = '';
+        } else {
+          alert('Ten tag jest już dodany do notatki');
+        }
+      }
+    }
+  }
+
+  deleteTag(tag: string) {
+    const index = this.note.tags.indexOf(tag, 0);
+    if (index > -1) {
+      this.note.tags.splice(index, 1);
+    }
+  }
+
+  abortChanges() {
+    this.ngOnInit();
+  }
+
+  addRate() {
+
+
+  }
+
+  saveRate(rateValue: string) {
+    const rate = {
+      userId: null,
+      noteId: null,
+      rate: rateValue
+    };
+    this.dataBaseService.saveRate(rate);
+  }
 }

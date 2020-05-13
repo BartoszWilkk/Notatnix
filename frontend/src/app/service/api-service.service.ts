@@ -7,6 +7,8 @@ import {User} from '../model/user';
 import {FileModel} from '../model/fileModel';
 import {resolve} from 'url';
 import * as url from 'url';
+import {Tag} from '../model/tag';
+import {Rate} from '../model/rate';
 // import {url} from 'inspector';
 
 @Injectable({
@@ -21,6 +23,10 @@ export class ApiServiceService {
   private GET_NOTE = `${this.BASE_URL}/note/get/`;
   private EDIT_NOTE = `${this.BASE_URL}/note/edit/`;
   private EDIT_NOTE_CHECK_TITLE = `${this.BASE_URL}/note/edit/checkTitle/`;
+
+  private ALL_TAGS = `${this.BASE_URL}/tag/getAll`;
+
+  private SAVE_RATE = `${this.BASE_URL}/rate/save`;
 
   private LOGIN = `${this.BASE_URL}/user/login/`;
   private REGISTRY = `${this.BASE_URL}/user/save/`;
@@ -78,6 +84,14 @@ export class ApiServiceService {
 
   getFilesByNoteId(id: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.GET_FILE_BY_NOTE + id);
+  }
+
+  getAllTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(this.ALL_TAGS);
+  }
+
+  saveRate(rate: Rate): Observable<Rate> {
+    return this.http.post<Rate>(this.SAVE_RATE, rate);
   }
 
   downloadFile(id: string): Observable<File> {

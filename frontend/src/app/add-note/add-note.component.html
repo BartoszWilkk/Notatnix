@@ -1,4 +1,3 @@
-<p>add-note works!</p>
 <div class="div-center">
   <div>
     <div>
@@ -17,6 +16,24 @@
       </label>
       <input id="description" [className]="descriptionClass"
              type="text" [(ngModel)]="description" (ngModelChange)="checkIsDescriptionEmpty()">
+    </div>
+
+    <div>
+      <span *ngIf="tags.length>0">Tagi:</span>
+      <ul>
+        <li *ngFor="let tag of tags">
+          #{{tag}}
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <label for="tag">
+        Dodaj tagi:
+        <br>
+      </label>
+      <input id="tag"
+             type="text" [(ngModel)]="tagTmp" (keypress)="addOneTagToTagsList($event)">
     </div>
 
     <div>

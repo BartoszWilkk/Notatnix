@@ -3,11 +3,16 @@
 <div [hidden]="viewModeHidden">
   <div class="div-center">
     <div>
-      id: {{note.id}}<br>
-      title: {{note.title}}<br>
-      description: {{note.description}}<br>
-      averageRating: {{note.averageRating}}<br>
-      files:
+      Tytuł: {{note.title}}<br>
+      Opis: {{note.description}}<br>
+      Średnia ocena: {{note.averageRating}}<span id="add-rate-button" (click)="addRate()"> dodaj ocenę</span> <br>
+      Tagi:
+      <ul class="tag-ul-container">
+        <li class="tag-li-container" *ngFor="let tag of note.tags">
+          #{{tag}}
+        </li>
+      </ul>
+      Pliki:
       <ul>
         <li *ngFor="let file of this.files" (click)="downloadFile(file.id)">
           {{file.name}}<br>
@@ -45,10 +50,30 @@
         </div>
 
         <div>
+          <span *ngIf="note.tags.length>0">Tagi:</span>
+          <ul class="tag-ul-container">
+            <li *ngFor="let tag of note.tags" class="tag-li-container-editing">
+              #{{tag}}
+                <img src="assets/delete.png" id="button_delete_note" alt="delete" (click)="deleteTag(tag)" style="width: 15px; height: 15px">
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <label for="tag">
+            Dodaj tagi:
+            <br>
+          </label>
+          <input id="tag"
+                 type="text" [(ngModel)]="tagTmp" (keypress)="addOneTagToTagsList($event)">
+        </div>
+
+        <div>
           <input type="file" id="customFile" (change)="selectFile($event)"><br>
         </div>
 
         <button class="button" (click)="saveChanges()">Zapisz zmiany</button>
+        <button class="button" (click)="abortChanges()">Anuluj</button>
       </div>
     </div>
   </div>

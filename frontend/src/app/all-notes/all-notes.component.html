@@ -2,10 +2,17 @@
   <ul>
     <li *ngFor="let note of notes" class="all-notes-container-li">
       <div class="all-notes-container" (click)="openNote(note.id)">
-        Dodał użytkownik o id: {{note.user}}<br>
+        <div><ul style="overflow-x:hidden; white-space:nowrap; ">
+          Tagi:
+          <li *ngFor="let tag of note.tags" style="display:inline;">#{{tag}} </li>
+        </ul></div>
+        <div>
+        Dodał użytkownik: {{note.userName}}<br>
         Tytuł: {{note.title}}<br>
         Opis: {{note.description}}<br>
-        Średnia ocena: {{note.averageRating}}
+        Średnia ocena: {{note.averageRating}}<br>
+        </div>
+
       </div>
     </li>
   </ul>

@@ -23,10 +23,12 @@ margin:
       <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-login" routerLinkActive="active">Zaloguj</a></li>
       <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-registry" routerLinkActive="active">Rejestracja</a></li>
       <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-all-notes" routerLinkActive="disabled" (click)="logout()">Wyloguj</a> </li>
+      <li><a routerLink="/app-tag-all" routerLinkActive="active">Tagi</a></li>
     </ul>
   </nav>
 </div>
 <div class="container">
+  <app-dialog-overview-example></app-dialog-overview-example>
   <router-outlet></router-outlet>
 </div>
 </body>

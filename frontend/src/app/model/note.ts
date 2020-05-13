@@ -3,6 +3,8 @@ export class Note {
   user: string;
   title: string;
   description: string;
+  userName: string;
   averageRating: string;
+  tags: string[];
   files: string[];
 }

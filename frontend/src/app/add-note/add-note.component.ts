@@ -18,6 +18,8 @@ export class AddNoteComponent implements OnInit {
   progress: { percentage: number } = { percentage: 0 };
   private title;
   private description;
+  private tagTmp = '';
+  private tags: string[] = [];
 
   private titleClass;
   private descriptionClass;
@@ -78,22 +80,12 @@ export class AddNoteComponent implements OnInit {
         user: GlobalConstants.user,
         title: this.title,
         description: this.description,
+        userName: null,
         averageRating: null,
-        files: null
+        files: null,
+        tags: this.tags
       };
       console.log(GlobalConstants.user);
-      // this.dataBaseService.saveNote(note).subscribe(
-      //   res => {
-      //     if (res == null) {
-      //       this.hideMessageNoteAlreadyExist = false;
-      //     } else {
-      //       this.router.navigateByUrl('/app-all-notes');
-      //     }
-      //   },
-      //   err => {
-      //     alert('Error w metodzie submit() w komponencie AddNoteComponent');
-      //   }
-      // );
       const noteSaved = await this.dataBaseService.saveNote(note).toPromise();
       if (noteSaved != null) {
         this.upload(noteSaved.id);
@@ -108,21 +100,7 @@ export class AddNoteComponent implements OnInit {
   selectFile(event) {
     this.selectedFiles = event.target.files;
     this.url = URL.createObjectURL(event.target.files[0]);
-
-
-
     console.log(this.url);
-    // const input = document.getElementById('customFile');
-    // this.url = URL.createObjectURL(event.target.files);
-
-    // if (event.target.files && event.target.files[0]) {
-    //   const reader = new FileReader();
-    //
-    //   reader.readAsDataURL(event.target.files[0]); // read file as data url
-    //   reader.onload = (event) => { // called once readAsDataURL is completed
-    //     this.url = event.target.result;
-    //   };
-    // }
   }
 
   upload(id) {
@@ -141,4 +119,16 @@ export class AddNoteComponent implements OnInit {
     }
   }
 
+  addOneTagToTagsList(event) {
+    if (event.key === 'Enter') {
+      if (this.tagTmp !== '') {
+        if (!this.tags.includes(this.tagTmp)) {
+          this.tags.push(this.tagTmp);
+          this.tagTmp = '';
+        } else {
+          alert('Ten tag jest już dodany do notatki');
+        }
+      }
+    }
+  }
 }

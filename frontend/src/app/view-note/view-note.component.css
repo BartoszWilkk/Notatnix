@@ -5,3 +5,25 @@
 .hide-div {
   display: none;
 }
+
+.tag-ul-container{
+  overflow-x:hidden;
+  white-space:nowrap;
+  gap: normal;
+  padding: 0 0 0 18px;
+  margin: 0 0 0 0;
+}
+
+.tag-li-container{
+  display:inline;
+  gap: normal;
+  margin: 2px 2px 0px 0px;
+  text-align: left;
+}
+
+.tag-li-container-editing{
+  display:inline;
+  gap: normal;
+  margin: 2px 12px 0px 0px;
+  text-align: left;
+}
