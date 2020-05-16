@@ -26,6 +26,10 @@ public class TagNoteConnectionService {
         return returnValue;
     }
 
+    public void delete(Long noteId){
+        repository.deleteAllByTagNoteConnectionId_NoteId(noteId);
+    }
+
     public void delete(Long noteId, Long tagId){
         TagNoteConnectionId tagNoteConnectionId = new TagNoteConnectionId(noteId, tagId);
         repository.deleteById(tagNoteConnectionId);

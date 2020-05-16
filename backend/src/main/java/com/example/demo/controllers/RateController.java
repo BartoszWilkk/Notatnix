@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.model.RateIdModel;
 import com.example.demo.model.RateModel;
 import com.example.demo.services.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,13 @@ public class RateController {
         return service.getRate(model);
     }
 
+    @PostMapping("/getMyRate")
+    public String getMyRate(@RequestBody RateIdModel rateIdModel) {
+        return service.getMyRate(rateIdModel);
+    }
+
     @PostMapping("/save")
-    public RateModel save(@RequestBody RateModel model) {
+    public String save(@RequestBody RateModel model) {
         return service.saveRate(model);
     }
 

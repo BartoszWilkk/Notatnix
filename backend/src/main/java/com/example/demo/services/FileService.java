@@ -60,6 +60,10 @@ public class FileService {
         }
     }
 
+    public void delete(Long noteId) {
+        repository.deleteAllByNoteEntityId(noteId);
+    }
+
     public ResponseEntity<Resource> get(Long id) {
         if (repository.findById(id).isPresent()){
             FileEntity fileEntity = repository.findById(id).get();

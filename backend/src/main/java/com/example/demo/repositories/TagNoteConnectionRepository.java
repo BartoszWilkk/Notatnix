@@ -9,4 +9,5 @@ import java.util.List;
 public interface TagNoteConnectionRepository extends JpaRepository<TagNoteConnectionEntity, TagNoteConnectionId> {
     List<TagNoteConnectionEntity> findAllByTagNoteConnectionId_NoteId(Long noteId);
     List<TagNoteConnectionEntity> findAllByTagNoteConnectionId_TagId(Long tagId);
+    void deleteAllByTagNoteConnectionId_NoteId(Long noteId);
 }

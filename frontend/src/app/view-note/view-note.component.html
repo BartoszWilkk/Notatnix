@@ -5,7 +5,19 @@
     <div>
       Tytuł: {{note.title}}<br>
       Opis: {{note.description}}<br>
-      Średnia ocena: {{note.averageRating}}<span id="add-rate-button" (click)="addRate()"> dodaj ocenę</span> <br>
+      <span *ngIf="myRate !== ''">Moja ocena: {{myRate}}<br></span>
+      Średnia ocena: {{note.averageRating}}<button id="add-rate-button" (click)="addRate()">Oceń</button>
+      <span id="place-for-rate">
+        <label for="rates">Ocena:</label>
+        <select id="rates" name="rates" [(ngModel)]="selectedRate">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button (click)="confirmRate()">Zatwierdź ocenę</button>
+      </span> <br>
       Tagi:
       <ul class="tag-ul-container">
         <li class="tag-li-container" *ngFor="let tag of note.tags">
@@ -22,6 +34,7 @@
       </ul>
     </div>
   </div>
+
   <div class="div-center">
     <button id="makeChanges" class="button" (click)="editNote()">Edytuj notatkę</button>
   </div>
@@ -74,6 +87,7 @@
 
         <button class="button" (click)="saveChanges()">Zapisz zmiany</button>
         <button class="button" (click)="abortChanges()">Anuluj</button>
+        <button (click)="deleteNote()">Usuń notatkę</button>
       </div>
     </div>
   </div>

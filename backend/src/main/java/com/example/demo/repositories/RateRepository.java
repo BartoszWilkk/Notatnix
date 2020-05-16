@@ -9,4 +9,5 @@ import java.util.List;
 public interface RateRepository extends JpaRepository<RateEntity, RateId> {
     List<RateEntity> findAllByRateIdNoteIdContains(Long rateId_noteId);
     List<RateEntity> findAllByRateId_NoteId(Long rateId_noteId);
+    void deleteAllByRateId_NoteId(Long noteId);
 }

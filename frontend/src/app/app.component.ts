@@ -9,7 +9,7 @@ import { GlobalConstants } from './global-constants';
 export class AppComponent {
   title = 'frontend';
   logged = GlobalConstants.logged;
-  constructor(private globalConstants: GlobalConstants) {}
+  constructor(public globalConstants: GlobalConstants) {}
   logout() {
     this.globalConstants.logout();
   }

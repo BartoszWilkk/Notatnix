@@ -9,9 +9,9 @@ import {ApiServiceService} from '../service/api-service.service';
 })
 export class TagAllComponent implements OnInit {
 
-  private tags: Tag[] = null;
+  tags: Tag[] = null;
 
-  constructor(private dataBaseService: ApiServiceService) { }
+  constructor(public dataBaseService: ApiServiceService) { }
 
   ngOnInit() {
     this.dataBaseService.getAllTags().subscribe(

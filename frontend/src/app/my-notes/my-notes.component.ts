@@ -10,9 +10,9 @@ import {Note} from '../model/note';
   styleUrls: ['./my-notes.component.css']
 })
 export class MyNotesComponent implements OnInit {
-  private notes: Note[] = [];
+  notes: Note[] = [];
 
-  constructor(private router: Router, private dataBaseService: ApiServiceService) { }
+  constructor(public router: Router, public dataBaseService: ApiServiceService) { }
 
   ngOnInit() {
     if (!GlobalConstants.logged) {

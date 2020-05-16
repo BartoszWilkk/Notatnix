@@ -37,6 +37,12 @@ public class NoteService {
     private TagService tagService;
 
     @Autowired
+    private RateService rateService;
+
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
     private TagNoteConnectionService tagNoteConnectionService;
 
     public NoteModel save(NoteModel model) {
@@ -347,5 +353,16 @@ public class NoteService {
 
     public void setTagNoteConnectionService(TagNoteConnectionService tagNoteConnectionService) {
         this.tagNoteConnectionService = tagNoteConnectionService;
+    }
+
+    public void delete(Long id) {
+        if (id != null) {
+            if (repository.existsById(id)) {
+                tagNoteConnectionService.delete(id);
+                rateService.delete(id);
+                fileService.delete(id);
+                repository.deleteById(id);
+            }
+        }
     }
 }

@@ -16,18 +16,18 @@ export class AddNoteComponent implements OnInit {
   selectedFiles: FileList;
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
-  private title;
-  private description;
-  private tagTmp = '';
-  private tags: string[] = [];
+   title;
+   description;
+   tagTmp = '';
+   tags: string[] = [];
 
-  private titleClass;
-  private descriptionClass;
+   titleClass;
+   descriptionClass;
 
-  private notEmptyData;
-  private hideMessageNoteAlreadyExist;
+   notEmptyData;
+   hideMessageNoteAlreadyExist;
 
-  constructor(private dataBaseService: ApiServiceService, private router: Router) { }
+  constructor(public dataBaseService: ApiServiceService, public router: Router) { }
 
   ngOnInit() {
     if (!GlobalConstants.logged) {

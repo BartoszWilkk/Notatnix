@@ -16,9 +16,9 @@ export class LoginComponent implements OnInit {
   usernameClass;
   passwordClass;
   correctCredentials;
-  private notEmptyData;
+  notEmptyData;
 
-  constructor(private constants: GlobalConstants, private router: Router, private dataBaseService: ApiServiceService) {
+  constructor(public constants: GlobalConstants, public router: Router, public dataBaseService: ApiServiceService) {
   }
 
   ngOnInit() {

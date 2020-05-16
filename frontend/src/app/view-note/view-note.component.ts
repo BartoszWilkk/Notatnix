@@ -5,6 +5,7 @@ import {ApiServiceService} from '../service/api-service.service';
 import {GlobalConstants} from '../global-constants';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {FileModel} from '../model/fileModel';
+import {RateId} from '../model/rate-id';
 
 @Component({
   selector: 'app-view-note',
@@ -19,24 +20,25 @@ export class ViewNoteComponent implements OnInit {
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
   files: FileModel[] = [];
+  myRate = '';
 
-  private tagTmp = '';
+  tagTmp = '';
+  selectedRate;
 
-  private displayingDiv;
-  private title;
-  private description;
+  displayingDiv;
+  title;
+  description;
 
-  private titleClass;
-  private descriptionClass;
+  titleClass;
+  descriptionClass;
 
-  private notEmptyData;
-  private noteAlreadyExistHidden = true;
+  notEmptyData;
+  noteAlreadyExistHidden = true;
 
-  constructor(private dataBaseService: ApiServiceService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public dataBaseService: ApiServiceService, public route: ActivatedRoute, public router: Router) { }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    let userId;
     this.displayingDiv = 'hide-div';
     this.editModeHidden = true;
     this.viewModeHidden = false;
@@ -44,13 +46,34 @@ export class ViewNoteComponent implements OnInit {
     this.note = await this.dataBaseService.getNote(id).toPromise();
     this.title = this.note.title;
     this.description = this.note.description;
-    userId = this.note.user;
+    const userIdLocal = this.note.user;
+    document.getElementById('place-for-rate').hidden = true;
+    if (!GlobalConstants.logged) {
+      document.getElementById('add-rate-button').hidden = true;
+    }
     if (this.note.user !== GlobalConstants.user) {
       // this.router.navigateByUrl('/app-all-notes');
       document.getElementById('makeChanges').style.display = 'none';
+    } else {
+      document.getElementById('add-rate-button').hidden = true;
     }
     if (!GlobalConstants.logged) {
       document.getElementById('add-rate-button').style.display = 'none';
+    } else {
+      const rateId: RateId = {
+        noteId: id,
+        userId: GlobalConstants.user
+      };
+      this.dataBaseService.getMyRate(rateId).subscribe(
+        res => {
+          if (res != null && res !== '') {
+            this.myRate = res;
+          }
+        },
+        err => {
+          alert('Error w metodzie ngOnInit() w ViewNoteComponent');
+        }
+      );
     }
     this.dataBaseService.getFilesByNoteId(id).subscribe(
       res => {
@@ -192,16 +215,36 @@ export class ViewNoteComponent implements OnInit {
   }
 
   addRate() {
-
+    document.getElementById('add-rate-button').hidden = true;
+    document.getElementById('place-for-rate').hidden = false;
 
   }
 
   saveRate(rateValue: string) {
     const rate = {
-      userId: null,
-      noteId: null,
+      userId: GlobalConstants.user,
+      noteId: this.note.id,
       rate: rateValue
     };
-    this.dataBaseService.saveRate(rate);
+    this.dataBaseService.saveRate(rate).subscribe(res => {
+      this.note.averageRating = res;
+    }, error => {
+      alert('Error w metodzie saveRate(rateValue: string) w ViewNoteComponent');
+    });
+  }
+
+  confirmRate() {
+    const rateVal: string = this.selectedRate;
+    document.getElementById('add-rate-button').hidden = false;
+    document.getElementById('place-for-rate').hidden = true;
+    this.saveRate(rateVal);
+  }
+
+  deleteNote() {
+    this.router.navigateByUrl('/app-all-notes');
+    this.dataBaseService.deleteNote(this.note.id).subscribe(res => {
+    }, error => {
+      alert('Error w metodzie deleteNote() w ViewNoteComponent');
+    });
   }
 }

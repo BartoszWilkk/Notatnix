@@ -61,4 +61,9 @@ public class NoteController {
         return service.filterNotes(filterParameters);
     }
 
+    @RequestMapping("delete/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
+
 }

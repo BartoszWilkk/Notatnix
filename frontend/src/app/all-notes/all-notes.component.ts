@@ -10,9 +10,9 @@ import {Router} from '@angular/router';
 })
 export class AllNotesComponent implements OnInit {
 
-  private notes: Note[];
+   notes: Note[];
 
-  constructor(private apiService: ApiServiceService, private router: Router) { }
+  constructor(public apiService: ApiServiceService, public router: Router) { }
 
   ngOnInit() {
     this.getAllNotes();

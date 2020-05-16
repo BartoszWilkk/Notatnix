@@ -4,6 +4,7 @@ import com.example.demo.composite.keys.RateId;
 import com.example.demo.entities.NoteEntity;
 import com.example.demo.entities.RateEntity;
 import com.example.demo.mappers.RateMapper;
+import com.example.demo.model.RateIdModel;
 import com.example.demo.model.RateModel;
 import com.example.demo.repositories.NoteRepository;
 import com.example.demo.repositories.RateRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -43,8 +45,8 @@ public class RateService {
         else return null;
     }
 
-    public RateModel saveRate(RateModel model) {
-        RateModel returnValue = null;
+    public String saveRate(RateModel model) {
+        String returnValue = "";
         Long userId = convertToLong(model.getUserId());
         Long noteId = convertToLong(model.getNoteId());
         if (userId != null && noteId != null) {
@@ -53,10 +55,24 @@ public class RateService {
                 if (!repository.existsById(rateId)) {
                     RateEntity entitySaved = repository.save(new RateEntity(rateId, Integer.parseInt(model.getRate())));
                     if (entitySaved != null) {
-                        updateNoteRating(noteId);
-                        returnValue = mapper.mapToModel(entitySaved);
+                        returnValue = updateNoteRating(noteId);
                     }
+                } else {
+                    returnValue = editRate(rateId, model);
                 }
+            }
+        }
+        return returnValue;
+    }
+
+    public String editRate(RateId rateId, RateModel model) {
+        String returnValue = "";
+        if (rateId != null) {
+            if (repository.findById(rateId).isPresent()) {
+                RateEntity rateEntity = repository.findById(rateId).get();
+                rateEntity.setRate(Integer.parseInt(model.getRate()));
+                RateEntity rateEntitySaved = repository.save(rateEntity);
+                returnValue = updateNoteRating(convertToLong(model.getNoteId()));
             }
         }
         return returnValue;
@@ -92,7 +108,7 @@ public class RateService {
         return returnValue;
     }
 
-    private void updateNoteRating(Long noteId) {
+    private String updateNoteRating(Long noteId) {
         if (noteRepository.findById(noteId).isPresent()) {
             NoteEntity noteEntity = noteRepository.findById(noteId).get();
             List<RateEntity> rateEntityList = repository.findAllByRateId_NoteId(noteId);
@@ -100,11 +116,14 @@ public class RateService {
             rateEntityList.forEach(rateEntity -> rate.updateAndGet(v -> v + rateEntity.getRate()));
             double avgRate = rate.get() / rateEntityList.size();
             noteEntity.setAverageRating(avgRate);
-            noteRepository.save(noteEntity);
+            return String.valueOf(noteRepository.save(noteEntity).getAverageRating());
         }
-        else System.out.println("I don't know how but you have error in method: " +
-                "void addRateToNote(Long noteId, int rate) in " +
-                "class RateService");
+        else {
+            System.out.println("I don't know how but you have error in method: " +
+                    "void addRateToNote(Long noteId, int rate) in " +
+                    "class RateService");
+            return "";
+        }
     }
 
     private RateId getKey(RateModel model) {
@@ -154,4 +173,29 @@ public class RateService {
     public void setMapper(RateMapper mapper) {
         this.mapper = mapper;
     }
+
+    public String getMyRate(RateIdModel rateIdModel) {
+        String result = "";
+        RateId rateId = convertToRateId(rateIdModel);
+        if (rateId != null) {
+            Optional o = repository.findById(rateId);
+            if (o.isPresent()) {
+                result = String.valueOf(((RateEntity)o.get()).getRate());
+            }
+        } else return null;
+        return result;
+    }
+
+    public void delete(Long noteId) {
+        repository.deleteAllByRateId_NoteId(noteId);
+    }
+
+    private RateId convertToRateId(RateIdModel rateIdModel) {
+        Long noteId = convertToLong(rateIdModel.getNoteId());
+        Long userId = convertToLong(rateIdModel.getUserId());
+        if (noteId != null && userId != null) {
+            return new RateId(noteId, userId);
+        } else return null;
+    }
+
 }
