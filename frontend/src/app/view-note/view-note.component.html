@@ -6,7 +6,9 @@
       Tytuł: {{note.title}}<br>
       Opis: {{note.description}}<br>
       <span *ngIf="myRate !== ''">Moja ocena: {{myRate}}<br></span>
-      Średnia ocena: {{note.averageRating}}<button id="add-rate-button" (click)="addRate()">Oceń</button>
+      Średnia ocena: {{note.averageRating}}
+      <br>
+      <button id="add-rate-button" (click)="addRate()">Oceń</button>
       <span id="place-for-rate">
         <label for="rates">Ocena:</label>
         <select id="rates" name="rates" [(ngModel)]="selectedRate">
