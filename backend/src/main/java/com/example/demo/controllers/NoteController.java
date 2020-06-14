@@ -7,6 +7,7 @@ import com.example.demo.services.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -57,10 +58,11 @@ public class NoteController {
     }
 
     @PostMapping("/filter")
-    public List<NoteModel> filterNotes(@RequestBody FilterParameters filterParameters) {
+    public List<NoteModel> filterNotes(@RequestBody FilterParameters filterParameters) throws InterruptedException {
+        Thread.sleep(3000);
         return service.filterNotes(filterParameters);
     }
-
+    @Transactional
     @RequestMapping("delete/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);

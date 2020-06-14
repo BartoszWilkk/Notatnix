@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AllNotesComponent } from './all-notes.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AllNotesComponent', () => {
   let component: AllNotesComponent;
@@ -8,6 +10,7 @@ describe('AllNotesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule],
       declarations: [ AllNotesComponent ]
     })
     .compileComponents();

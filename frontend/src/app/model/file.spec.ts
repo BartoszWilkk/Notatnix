@@ -1,4 +1,4 @@
-import { FileModel } from './file';
+import { FileModel } from './fileModel';
 
 describe('File', () => {
   it('should create an instance', () => {

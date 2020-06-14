@@ -194,7 +194,7 @@ public class RateService {
         Long noteId = convertToLong(rateIdModel.getNoteId());
         Long userId = convertToLong(rateIdModel.getUserId());
         if (noteId != null && userId != null) {
-            return new RateId(noteId, userId);
+            return new RateId(userId, noteId);
         } else return null;
     }
 

@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.passwordClass = 'correct';
     this.notEmptyData = true;
     this.correctCredentials = true;
-    this.loginAutomaticForDeveloper();
+    // this.loginAutomaticForDeveloper();
   }
 
   checkIsUsernameEmpty(): boolean {
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
             this.correctCredentials = false;
           } else {
             this.correctCredentials = true;
-            this.constants.login(res.id);
+            this.constants.login(res.id, res.role);
             this.router.navigateByUrl('/app-all-notes');
           }
         },
@@ -87,8 +87,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginAutomaticForDeveloper() {
-    this.username = 'user';
-    this.password = 'user';
+    this.username = 'admin';
+    this.password = 'admin';
     this.login();
   }
 }

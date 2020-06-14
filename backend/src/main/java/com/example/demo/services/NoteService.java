@@ -167,7 +167,6 @@ public class NoteService {
         String description = null;
         String userName = null;
         List<String> tags = new ArrayList<>();
-        boolean isAggregate = false;
         if(filterParameters.getTitle() != null) {
             title = filterParameters.getTitle();
         }
@@ -180,29 +179,7 @@ public class NoteService {
         if(filterParameters.getTags().size() > 0) {
             tags = filterParameters.getTags();
         }
-        if(filterParameters.getIsAggregate() != null) {
-            isAggregate = Boolean.parseBoolean(filterParameters.getIsAggregate());
-        }
-
-        if (isAggregate) {
-            returnList = filterNotesByAllParameters(title, description, userName, tags);
-        }
-//        if (title != null) {
-//            returnList = filterNotesByTitle(title);
-//        }
-//
-//        if (description != null) {
-//            returnList = filterNotesByTitle(description);
-//        }
-//
-//        if (userName != null) {
-//            returnList = filterNotesByTitle(userName);
-//        }
-//
-//        if (tag != null) {
-//            returnList = filterNotesByTag(tag);
-//        }
-
+        returnList = filterNotesByAllParameters(title, description, userName, tags);
 
         return returnList;
     }
@@ -351,10 +328,9 @@ public class NoteService {
         return tagNoteConnectionService;
     }
 
-    public void setTagNoteConnectionService(TagNoteConnectionService tagNoteConnectionService) {
-        this.tagNoteConnectionService = tagNoteConnectionService;
-    }
-
+//    public void setTagNoteConnectionService(TagNoteConnectionService tagNoteConnectionService) {
+//        this.tagNoteConnectionService = tagNoteConnectionService;
+//    }
     public void delete(Long id) {
         if (id != null) {
             if (repository.existsById(id)) {

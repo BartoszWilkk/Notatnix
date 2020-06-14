@@ -6,6 +6,8 @@ import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
@@ -22,6 +24,21 @@ public class UserController {
     @RequestMapping("/get/{id}")
     public UserModel get(@PathVariable Long id) {
         return service.getUser(id);
+    }
+
+    @RequestMapping("/getAllActive")
+    public List<UserModel> getAllActive() {
+        return service.getAllActiveUsers();
+    }
+
+    @RequestMapping("/getAllBanned")
+    public List<UserModel> getAllBanned() {
+        return service.getAllBannedUsers();
+    }
+
+    @RequestMapping("/ban/{id}")
+    public UserModel ban(@PathVariable Long id) {
+        return service.banUser(id);
     }
 
     @RequestMapping("/login")

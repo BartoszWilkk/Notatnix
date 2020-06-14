@@ -18,6 +18,10 @@ import { LoginComponent } from './login/login.component';
 import { MyNotesComponent } from './my-notes/my-notes.component';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
 import { TagAllComponent } from './tag-all/tag-all.component';
+import { AdminViewComponent } from './admin-view/admin-view.component';
+import { FilterComponent } from './filter/filter.component';
+
+
 
 const appRoutes: Routes = [
   {
@@ -49,6 +53,18 @@ const appRoutes: Routes = [
     component: TagAllComponent
   },
   {
+    path: 'app-admin-view',
+    component: AdminViewComponent
+  },
+  {
+    path: 'app-filter',
+    component: FilterComponent
+  },
+  {
+    path: 'app-filter/:filter',
+    component: FilterComponent
+  },
+  {
     path: 'app-view-note/:id',
     component: ViewNoteComponent
   },
@@ -74,7 +90,9 @@ const appRoutes: Routes = [
     RegistryComponent,
     LoginComponent,
     MyNotesComponent,
-    TagAllComponent
+    TagAllComponent,
+    AdminViewComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,

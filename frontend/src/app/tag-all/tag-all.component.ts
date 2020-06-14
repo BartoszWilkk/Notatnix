@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Tag} from '../model/tag';
 import {ApiServiceService} from '../service/api-service.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tag-all',
@@ -11,7 +12,7 @@ export class TagAllComponent implements OnInit {
 
   tags: Tag[] = null;
 
-  constructor(public dataBaseService: ApiServiceService) { }
+  constructor(public dataBaseService: ApiServiceService, public router: Router) { }
 
   ngOnInit() {
     this.dataBaseService.getAllTags().subscribe(
@@ -24,4 +25,7 @@ export class TagAllComponent implements OnInit {
     );
   }
 
+  showFilteredNotes(tagName: string) {
+    this.router.navigate(['/app-filter', tagName]);
+  }
 }

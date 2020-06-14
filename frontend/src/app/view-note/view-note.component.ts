@@ -23,7 +23,7 @@ export class ViewNoteComponent implements OnInit {
   myRate = '';
 
   tagTmp = '';
-  selectedRate;
+  selectedRate = '5';
 
   displayingDiv;
   title;
@@ -231,6 +231,7 @@ export class ViewNoteComponent implements OnInit {
     }, error => {
       alert('Error w metodzie saveRate(rateValue: string) w ViewNoteComponent');
     });
+    this.ngOnInit();
   }
 
   confirmRate() {

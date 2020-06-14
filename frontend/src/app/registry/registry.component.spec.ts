@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistryComponent } from './registry.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('RegistryComponent', () => {
   let component: RegistryComponent;
@@ -8,6 +10,7 @@ describe('RegistryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule],
       declarations: [ RegistryComponent ]
     })
     .compileComponents();

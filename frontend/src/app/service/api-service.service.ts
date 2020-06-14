@@ -10,6 +10,7 @@ import {FileModel} from '../model/fileModel';
 import {Tag} from '../model/tag';
 import {Rate} from '../model/rate';
 import {RateId} from '../model/rate-id';
+import {FilterParameters} from '../model/filter-parameters';
 // import {url} from 'inspector';
 
 @Injectable({
@@ -17,6 +18,7 @@ import {RateId} from '../model/rate-id';
 })
 export class ApiServiceService {
   BASE_URL = 'http://localhost:8088';
+  // BASE_URL = 'https://limitless-tundra-23324.herokuapp.com';
 
    ALL_NOTES = `${this.BASE_URL}/note/getAll`;
    GET_MY_NOTES = `${this.BASE_URL}/note/getMyNotes/`;
@@ -25,8 +27,9 @@ export class ApiServiceService {
    EDIT_NOTE = `${this.BASE_URL}/note/edit/`;
    EDIT_NOTE_CHECK_TITLE = `${this.BASE_URL}/note/edit/checkTitle/`;
   DELETE_NOTE = `${this.BASE_URL}/note/delete/`;
+  FILTER_NOTES = `${this.BASE_URL}/note/filter/`;
 
-   ALL_TAGS = `${this.BASE_URL}/tag/getAll`;
+  ALL_TAGS = `${this.BASE_URL}/tag/getAll`;
 
    SAVE_RATE = `${this.BASE_URL}/rate/save`;
    GET_RATE = `${this.BASE_URL}/rate/getMyRate`;
@@ -34,10 +37,15 @@ export class ApiServiceService {
    LOGIN = `${this.BASE_URL}/user/login/`;
    REGISTRY = `${this.BASE_URL}/user/save/`;
    GET_USER = `${this.BASE_URL}/user/get/`;
+   GET_ALL_USERS_ACTIVE = `${this.BASE_URL}/user/getAllActive/`;
+  GET_ALL_USERS_BANNED = `${this.BASE_URL}/user/getAllBanned/`;
+  BAN_USER = `${this.BASE_URL}/user/ban/`;
 
    SAVE_FILE = `${this.BASE_URL}/file/save/`;
    GET_FILE_BY_NOTE = `${this.BASE_URL}/file/getByNoteId/`;
    DOWNLOAD_FILE = `${this.BASE_URL}/file/get/`;
+
+
 
   constructor(public http: HttpClient) { }
 
@@ -63,6 +71,10 @@ export class ApiServiceService {
     } else { return this.http.post<Note>(this.EDIT_NOTE + note.id, note); }
   }
 
+  filterNotes(filter: FilterParameters): Observable<Note[]> {
+    return this.http.post<Note[]>(this.FILTER_NOTES, filter);
+  }
+
   login(credentials: Credentials): Observable<User> {
     return this.http.post<User>(this.LOGIN, credentials);
   }
@@ -73,6 +85,18 @@ export class ApiServiceService {
 
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(this.GET_USER + id);
+  }
+
+  banUser(id: string): Observable<User> {
+    return this.http.get<User>(this.BAN_USER + id);
+  }
+
+  getAllActiveUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.GET_ALL_USERS_ACTIVE);
+  }
+
+  getAllBannedUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.GET_ALL_USERS_BANNED);
   }
 
   saveFile(file: File, id: string): Observable<HttpEvent<{}>> {

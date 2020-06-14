@@ -6,6 +6,7 @@ import com.example.demo.repositories.TagNoteConnectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -26,7 +27,9 @@ public class TagNoteConnectionService {
         return returnValue;
     }
 
+    @Transactional
     public void delete(Long noteId){
+
         repository.deleteAllByTagNoteConnectionId_NoteId(noteId);
     }
 
@@ -49,7 +52,7 @@ public class TagNoteConnectionService {
         return  returnList;
     }
 
-    public List<TagNoteConnectionEntity> getConnectionsByNoteId(String s_tagId) {
+    public List<TagNoteConnectionEntity> getConnectionsByTagId2(String s_tagId) {
         List<TagNoteConnectionEntity> returnList = null;
         Long tagId = convertToLong(s_tagId);
         if (tagId != null) {

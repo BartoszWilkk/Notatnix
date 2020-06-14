@@ -83,7 +83,8 @@ export class RegistryComponent implements OnInit {
         id: null,
         username: this.username,
         emailAddress: this.email,
-        password: this.password
+        password: this.password,
+        role: 'user'
       };
       this.dataBaseService.registry(user).subscribe(
         res => {
@@ -91,7 +92,7 @@ export class RegistryComponent implements OnInit {
             this.loginAlreadyUsed = true;
           } else {
             this.loginAlreadyUsed = false;
-            this.constants.login(res.id);
+            this.constants.login(res.id, 'user');
             this.router.navigateByUrl('/app-all-notes');
           }
         },

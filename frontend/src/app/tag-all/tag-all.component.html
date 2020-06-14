@@ -1,7 +1,7 @@
 <div>
-  <ul>
-    <li *ngFor="let tag of tags">
-      {{tag.tagName}}
+  <ul style="list-style-type: none;">
+    <li *ngFor="let tag of tags" (click)="showFilteredNotes(tag.tagName)">
+      #{{tag.tagName}}
     </li>
   </ul>
 </div>

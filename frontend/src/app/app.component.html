@@ -18,12 +18,14 @@ margin:
   <nav>
     <ul>
       <li><a routerLink="/app-all-notes" routerLinkActive="active">Notatki</a> </li>
+      <li><a routerLink="/app-tag-all" routerLinkActive="active">Tagi</a></li>
+      <li><a routerLink="/app-filter" routerLinkActive="active">Wyszukaj</a></li>
       <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-add-note" routerLinkActive="active">Dodaj notatkę</a></li>
       <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-my-notes" routerLinkActive="active">Moje notatki</a></li>
-      <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-login" routerLinkActive="active">Zaloguj</a></li>
+      <li [hidden]="!globalConstants.getAdminRoleInfo()"><a routerLink="/app-admin-view" routerLinkActive="active">Okno administracyjne</a></li>
       <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-registry" routerLinkActive="active">Rejestracja</a></li>
+      <li [hidden]="globalConstants.getLoggedInfo()"><a routerLink="/app-login" routerLinkActive="active">Zaloguj</a></li>
       <li [hidden]="!globalConstants.getLoggedInfo()"><a routerLink="/app-all-notes" routerLinkActive="disabled" (click)="logout()">Wyloguj</a> </li>
-      <li><a routerLink="/app-tag-all" routerLinkActive="active">Tagi</a></li>
     </ul>
   </nav>
 </div>
